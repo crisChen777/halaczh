@@ -1,0 +1,58 @@
+#include <iostream>
+#include <ctime>
+#include <cmath>
+
+using namespace std;
+#define MAXN 10;
+clock_t start, stop;
+double dunt;
+double f1(int n, double a[], double x);
+double f2(int n, double a[], double x);
+void exa(int c,double x[]);
+int main() {
+	int i;
+	double a[10];
+	for (i = 0; i < 10; i++) {
+		a[i] = (double)i;
+	}
+
+	exa(1, a);
+	cout << "ticks1:" << (double)(stop - start)<<endl;
+	exa(2, a);
+	cout << "ticks1:" << (double)(stop - start)<<endl;
+	return 0;
+}
+
+double f1(int n, double a[], double x) {
+	int i;
+	double p = a[0];
+	for (i = 0; i <= n; i++) {
+		p = p + a[i] * (pow(x, i));
+	}
+	return p;
+}
+
+double f2(int n, double a[], double x) {
+	int i;
+	double p = a[n];
+	for (i = n; i > 0; i--) {
+		p = a[i - 1] + x*p;
+	}
+	return p;
+}
+
+void exa(int c,double x[]) {
+	start = clock();
+	if (c == 1) {
+		for (int i = 0; i < 1000000; i++) {
+			f1(9, x, 1.1);
+		}
+	}
+	if (c == 2) {
+		for (int i = 0; i < 1000000; i++) {
+			f2(9, x, 1.1);
+		}
+	}
+	stop = clock();
+	dunt = ((double)stop - start) / CLK_TCK;
+}
